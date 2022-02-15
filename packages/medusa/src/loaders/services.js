@@ -1,7 +1,6 @@
+import { asFunction } from "awilix"
 import glob from "glob"
 import path from "path"
-import { asFunction } from "awilix"
-
 import formatRegistrationName from "../utils/format-registration-name"
 
 /**
