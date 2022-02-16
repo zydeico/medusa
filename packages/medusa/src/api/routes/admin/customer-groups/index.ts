@@ -9,6 +9,9 @@ export default (app) => {
   app.use("/customer-groups", route)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 21d99a44 (feat: GET customer group endpoint)
   route.get("/:id", middlewares.wrap(require("./get-customer-group").default))
   route.post("/", middlewares.wrap(require("./create-customer-group").default))
   route.delete(

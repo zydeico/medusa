@@ -1,7 +1,7 @@
+import { defaultAdminCustomerGroupsRelations } from "."
 import { CustomerGroupService } from "../../../../services"
 import { FindParams } from "../../../../types/common"
 import { validator } from "../../../../utils/validator"
-import { defaultAdminCustomerGroupsRelations } from "."
 
 /**
  * @oas [get] /customer-group/{id}

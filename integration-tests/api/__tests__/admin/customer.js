@@ -56,11 +56,7 @@ describe("/admin/customers", () => {
         })
 
       expect(response.status).toEqual(200)
-<<<<<<< HEAD
       expect(response.data.count).toEqual(8)
-=======
-      expect(response.data.count).toEqual(5)
->>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
       expect(response.data.customers).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -332,7 +328,6 @@ describe("/admin/customers", () => {
         ])
       )
     })
-<<<<<<< HEAD
   })
 
   describe("GET /admin/customers/:id", () => {
@@ -405,8 +400,6 @@ describe("/admin/customers", () => {
         updated_at: expect.any(String),
       })
     })
-=======
->>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
   })
 
   describe("GET /admin/customers/:id", () => {
