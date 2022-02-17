@@ -20,18 +20,26 @@ import { ResponsePromise } from "../../typings"
 import BaseResource from "../base"
 
 class AdminProductsResource extends BaseResource {
+<<<<<<< HEAD
   create(
     payload: AdminPostProductsReq,
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsRes> {
+=======
+  create(payload: AdminPostProductsReq, customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/products/`
     return this.client.request("POST", path, payload, {}, customHeaders)
   }
 
+<<<<<<< HEAD
   retrieve(
     id: string,
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsRes> {
+=======
+  retrieve(id: string, customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/products/${id}`
     return this.client.request("GET", path, {}, {}, customHeaders)
   }
@@ -39,24 +47,36 @@ class AdminProductsResource extends BaseResource {
   update(
     id: string,
     payload: AdminPostProductsProductReq,
+<<<<<<< HEAD
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsRes> {
+=======
+    customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/products/${id}`
     return this.client.request("POST", path, payload, {}, customHeaders)
   }
 
+<<<<<<< HEAD
   delete(
     id: string,
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsDeleteRes> {
+=======
+  delete(id: string, customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsDeleteRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/products/${id}`
     return this.client.request("DELETE", path, {}, {}, customHeaders)
   }
 
+<<<<<<< HEAD
   list(
     query?: AdminGetProductsParams,
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsListRes> {
+=======
+  list(query?: AdminGetProductsParams, customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsListRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     let path = `/admin/products`
 
     if (query) {
@@ -67,16 +87,24 @@ class AdminProductsResource extends BaseResource {
     return this.client.request("GET", path, {}, {}, customHeaders)
   }
 
+<<<<<<< HEAD
   listTypes(
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsListTypesRes> {
+=======
+  listTypes(customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsListTypesRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/products/types`
     return this.client.request("GET", path, {}, {}, customHeaders)
   }
 
+<<<<<<< HEAD
   listTags(
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminProductsListTagsRes> {
+=======
+  listTags(customHeaders: Record<string, any> = {}): ResponsePromise<AdminProductsListTagsRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/products/tag-usage`
     return this.client.request("GET", path, {}, {}, customHeaders)
   }

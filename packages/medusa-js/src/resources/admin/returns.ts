@@ -16,10 +16,14 @@ class AdminReturnsResource extends BaseResource {
    * @param customHeaders
    * @returns the order for which the return was canceled
    */
+<<<<<<< HEAD
   cancel(
     id: string,
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminReturnsCancelRes> {
+=======
+  cancel(id: string, customHeaders: Record<string, any> = {}): ResponsePromise<AdminReturnsCancelRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     const path = `/admin/returns/${id}/cancel`
     return this.client.request("POST", path, {}, {}, customHeaders)
   }
@@ -46,10 +50,14 @@ class AdminReturnsResource extends BaseResource {
    * @param customHeaders
    * @returns a list of returns matching the query
    */
+<<<<<<< HEAD
   list(
     query?: AdminGetReturnsParams,
     customHeaders: Record<string, any> = {}
   ): ResponsePromise<AdminReturnsListRes> {
+=======
+  list(query?: AdminGetReturnsParams, customHeaders: Record<string, any> = {}): ResponsePromise<AdminReturnsListRes> {
+>>>>>>> 22d387dc (Feat(medusajs) Allow to pass custom headers (#1009))
     let path = `/admin/returns/`
 
     if (query) {
