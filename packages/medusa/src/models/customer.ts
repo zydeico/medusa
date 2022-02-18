@@ -58,6 +58,7 @@ export class Customer {
   @OneToMany(() => Order, (order) => order.customer)
   orders: Order[]
 
+<<<<<<< HEAD
   @JoinTable({
     name: "customer_group_customers",
     inverseJoinColumn: {
@@ -70,6 +71,9 @@ export class Customer {
     },
   })
   @ManyToMany(() => CustomerGroup, (cg) => cg.customers, { cascade: true })
+=======
+  @ManyToMany(() => CustomerGroup, { cascade: true })
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
   groups: CustomerGroup[]
 
   @CreateDateColumn({ type: resolveDbType("timestamptz") })

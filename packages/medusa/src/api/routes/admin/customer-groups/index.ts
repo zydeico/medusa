@@ -8,6 +8,7 @@ const route = Router()
 export default (app) => {
   app.use("/customer-groups", route)
 
+<<<<<<< HEAD
   route.get("/:id", middlewares.wrap(require("./get-customer-group").default))
   route.post("/", middlewares.wrap(require("./create-customer-group").default))
   route.delete(
@@ -24,6 +25,9 @@ export default (app) => {
     middlewares.wrap(require("./update-customer-group").default)
   )
 
+=======
+  route.post("/", middlewares.wrap(require("./create-customer-group").default))
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
   return app
 }
 
@@ -37,6 +41,9 @@ export type AdminCustomerGroupsListRes = PaginatedResponse & {
   customer_groups: CustomerGroup[]
 }
 
+<<<<<<< HEAD
 export const defaultAdminCustomerGroupsRelations = []
 
+=======
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
 export * from "./create-customer-group"

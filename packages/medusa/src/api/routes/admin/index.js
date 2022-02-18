@@ -25,8 +25,11 @@ import collectionRoutes from "./collections"
 import productTagRoutes from "./product-tags"
 import notificationRoutes from "./notifications"
 import noteRoutes from "./notes"
+<<<<<<< HEAD
 import taxRateRoutes from "./tax-rates"
 import productTypesRoutes from "./product-types"
+=======
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
 import customerGroupRoutes from "./customer-groups"
 
 const route = Router()
@@ -84,7 +87,10 @@ export default (app, container, config) => {
   productTypesRoutes(route)
   noteRoutes(route)
   inviteRoutes(route)
+<<<<<<< HEAD
   taxRateRoutes(route)
+=======
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
   customerGroupRoutes(route)
 
   return app

@@ -3,11 +3,14 @@ import { BaseService } from "medusa-interfaces"
 import { DeepPartial, EntityManager } from "typeorm"
 import { CustomerGroup } from ".."
 import { CustomerGroupRepository } from "../repositories/customer-group"
+<<<<<<< HEAD
 import { FindConfig } from "../types/common"
 import {
   CustomerGroupUpdate,
   FilterableCustomerGroupProps,
 } from "../types/customer-groups"
+=======
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
 
 type CustomerGroupConstructorProps = {
   manager: EntityManager
@@ -44,6 +47,7 @@ class CustomerGroupService extends BaseService {
     return cloned
   }
 
+<<<<<<< HEAD
   async retrieve(id: string, config = {}): Promise<CustomerGroup> {
     const cgRepo = this.manager_.getCustomRepository(
       this.customerGroupRepository_
@@ -63,6 +67,8 @@ class CustomerGroupService extends BaseService {
     return customerGroup
   }
 
+=======
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
   /**
    * Creates a customer group with the provided data.
    * @param {DeepPartial<CustomerGroup>} group - the customer group to create
@@ -88,6 +94,7 @@ class CustomerGroupService extends BaseService {
       }
     })
   }
+<<<<<<< HEAD
 
   /**
    * Update a customer group.
@@ -189,6 +196,8 @@ class CustomerGroupService extends BaseService {
 
     return customerGroup
   }
+=======
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
 }
 
 export default CustomerGroupService

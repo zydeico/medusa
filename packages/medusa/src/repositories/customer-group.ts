@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { DeleteResult, EntityRepository, In, Repository } from "typeorm"
 import { CustomerGroup } from "../models/customer-group"
 
@@ -17,3 +18,10 @@ export class CustomerGroupRepository extends Repository<CustomerGroup> {
       .execute()
   }
 }
+=======
+import { EntityRepository, Repository } from "typeorm"
+import { CustomerGroup } from "../models/customer-group"
+
+@EntityRepository(CustomerGroup)
+export class CustomerGroupRepository extends Repository<CustomerGroup> {}
+>>>>>>> b16976a6 (Feat: Create customer group (#1074))
