@@ -4,6 +4,7 @@ import { DeepPartial, EntityManager } from "typeorm"
 import { CustomerGroup } from ".."
 import { CustomerGroupRepository } from "../repositories/customer-group"
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { FindConfig } from "../types/common"
 import {
   CustomerGroupUpdate,
@@ -11,6 +12,10 @@ import {
 } from "../types/customer-groups"
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+import { FindConfig } from "../types/common"
+import { FilterableCustomerGroupProps } from "../types/customer-groups"
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
 
 type CustomerGroupConstructorProps = {
   manager: EntityManager
@@ -95,6 +100,7 @@ class CustomerGroupService extends BaseService {
     })
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   /**
    * Update a customer group.
@@ -149,6 +155,8 @@ class CustomerGroupService extends BaseService {
       return Promise.resolve()
     })
   }
+=======
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
 
   /**
    * List customer groups.
@@ -168,6 +176,7 @@ class CustomerGroupService extends BaseService {
     const query = this.buildQuery_(selector, config)
     return await cgRepo.find(query)
   }
+<<<<<<< HEAD
 
   /**
    * Remove list of customers from a customergroup
@@ -198,6 +207,8 @@ class CustomerGroupService extends BaseService {
   }
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
 }
 
 export default CustomerGroupService

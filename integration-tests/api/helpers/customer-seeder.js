@@ -37,6 +37,7 @@ module.exports = async (connection, data = {}) => {
   })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const deletionCustomer = await manager.create(Customer, {
     id: "test-customer-delete-cg",
     email: "test-deletetion-cg@email.com",
@@ -44,10 +45,19 @@ module.exports = async (connection, data = {}) => {
 
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+  await manager.insert(Customer, {
+    id: "test-customer-5",
+    email: "test5@email.com",
+    groups: [{ id: "test-group-5", name: "test-group-5" }],
+  })
+
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
   await manager.insert(CustomerGroup, {
     id: "customer-group-1",
     name: "vip-customers",
   })
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   await manager.insert(CustomerGroup, {
@@ -60,12 +70,15 @@ module.exports = async (connection, data = {}) => {
     id: "customer-group-3",
     name: "vest-group-3",
   })
+=======
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
 
   await manager.insert(CustomerGroup, {
     id: "test-group-4",
     name: "test-group-4",
   })
 
+<<<<<<< HEAD
   const customer5 = manager.create(Customer, {
     id: "test-customer-5",
     email: "test5@email.com",
@@ -109,4 +122,10 @@ module.exports = async (connection, data = {}) => {
   await manager.save(deletionCustomer)
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+  await manager.insert(CustomerGroup, {
+    id: "test-group-5",
+    name: "test-group-5",
+  })
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
 }

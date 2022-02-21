@@ -56,7 +56,11 @@ describe("/admin/customers", () => {
         })
 
       expect(response.status).toEqual(200)
+<<<<<<< HEAD
       expect(response.data.count).toEqual(8)
+=======
+      expect(response.data.count).toEqual(5)
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
       expect(response.data.customers).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -328,6 +332,7 @@ describe("/admin/customers", () => {
         ])
       )
     })
+<<<<<<< HEAD
   })
 
   describe("GET /admin/customers/:id", () => {
@@ -400,6 +405,8 @@ describe("/admin/customers", () => {
         updated_at: expect.any(String),
       })
     })
+=======
+>>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
   })
 
   describe("GET /admin/customers/:id", () => {
@@ -450,7 +457,7 @@ describe("/admin/customers", () => {
       const api = useApi()
 
       const response = await api
-        .get("/admin/customers/test-customer-1?expand=billing_address", {
+        .get("/admin/customers/test-customer-1?expand=billing_address,groups", {
           headers: {
             Authorization: "Bearer test_token",
           },
@@ -467,6 +474,7 @@ describe("/admin/customers", () => {
           created_at: expect.any(String),
           updated_at: expect.any(String),
         },
+        groups: [],
         created_at: expect.any(String),
         updated_at: expect.any(String),
       })
