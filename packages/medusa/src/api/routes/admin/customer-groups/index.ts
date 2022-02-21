@@ -45,8 +45,13 @@ export type AdminCustomerGroupsListRes = PaginatedResponse & {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const defaultAdminCustomerGroupsRelations = []
 
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+export const defaultAdminCustomerGroupsRelations = []
+
+>>>>>>> ecd6ed82 (feat: add `extend` param for customer groups)
 export * from "./create-customer-group"
