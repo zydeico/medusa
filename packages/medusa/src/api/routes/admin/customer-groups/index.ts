@@ -36,7 +36,15 @@ export default (app) => {
     "/:id",
     middlewares.wrap(require("./delete-customer-group").default)
   )
+<<<<<<< HEAD
 >>>>>>> e35a4fb2 (Feat: Delete customer group (#1102))
+=======
+  route.post(
+    "/:id",
+    middlewares.wrap(require("./update-customer-group").default)
+  )
+
+>>>>>>> 694e2df2 (feat: customer group update (#1098))
   return app
 }
 

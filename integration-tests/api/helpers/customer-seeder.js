@@ -82,6 +82,17 @@ module.exports = async (connection, data = {}) => {
 >>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
 
   await manager.insert(CustomerGroup, {
+    id: "customer-group-2",
+    name: "test-group-2",
+    metadata: { data1: "value1" },
+  })
+
+  await manager.insert(CustomerGroup, {
+    id: "customer-group-3",
+    name: "vest-group-3",
+  })
+
+  await manager.insert(CustomerGroup, {
     id: "test-group-4",
     name: "test-group-4",
   })

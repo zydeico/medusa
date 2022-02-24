@@ -14,8 +14,15 @@ import {
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
 =======
 import { FindConfig } from "../types/common"
+<<<<<<< HEAD
 import { FilterableCustomerGroupProps } from "../types/customer-groups"
 >>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
+=======
+import {
+  CustomerGroupUpdate,
+  FilterableCustomerGroupProps,
+} from "../types/customer-groups"
+>>>>>>> 694e2df2 (feat: customer group update (#1098))
 
 type CustomerGroupConstructorProps = {
   manager: EntityManager
@@ -58,8 +65,12 @@ class CustomerGroupService extends BaseService {
     const cgRepo = this.manager_.getCustomRepository(
 =======
   async retrieve(id: string, config = {}): Promise<CustomerGroup> {
+<<<<<<< HEAD
     const customerRepo = this.manager_.getCustomRepository(
 >>>>>>> 21d99a44 (feat: GET customer group endpoint)
+=======
+    const cgRepo = this.manager_.getCustomRepository(
+>>>>>>> 694e2df2 (feat: customer group update (#1098))
       this.customerGroupRepository_
     )
 
@@ -67,10 +78,14 @@ class CustomerGroupService extends BaseService {
     const query = this.buildQuery_({ id: validatedId }, config)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     const customerGroup = await cgRepo.findOne(query)
 =======
     const customerGroup = await customerRepo.findOne(query)
 >>>>>>> 21d99a44 (feat: GET customer group endpoint)
+=======
+    const customerGroup = await cgRepo.findOne(query)
+>>>>>>> 694e2df2 (feat: customer group update (#1098))
     if (!customerGroup) {
       throw new MedusaError(
         MedusaError.Types.NOT_FOUND,
@@ -169,6 +184,38 @@ class CustomerGroupService extends BaseService {
   }
 =======
 >>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
+
+  /**
+   * Update a customer group.
+   *
+   * @param {string} customerGroupId - id of the customer group
+   * @param {CustomerGroupUpdate} update - customer group partial data
+   */
+  async update(
+    customerGroupId: string,
+    update: CustomerGroupUpdate
+  ): Promise<CustomerGroup[]> {
+    return this.atomicPhase_(async (manager) => {
+      const { metadata, ...properties } = update
+
+      const cgRepo: CustomerGroupRepository = manager.getCustomRepository(
+        this.customerGroupRepository_
+      )
+
+      const customerGroup = await this.retrieve(customerGroupId)
+
+      for (const key in properties) {
+        if (typeof properties[key] !== "undefined") {
+          customerGroup[key] = properties[key]
+        }
+      }
+
+      if (typeof metadata !== "undefined") {
+        customerGroup.metadata = this.setMetadata_(customerGroup, metadata)
+      }
+      return await cgRepo.save(customerGroup)
+    })
+  }
 
   /**
    * Remove customer group
