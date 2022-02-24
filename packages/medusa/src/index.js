@@ -6,6 +6,9 @@ export * from "./interfaces"
 
 // Models
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c56660fc (feat: new tax api (#979))
 export * from "./models/shipping-tax-rate"
 export * from "./models/product-tax-rate"
 export * from "./models/product-type-tax-rate"
@@ -64,6 +67,7 @@ export * from "./models/store"
 export * from "./models/swap"
 export * from "./models/user"
 export * from "./models/tax-provider"
+<<<<<<< HEAD
 =======
 export { Address } from "./models/address"
 export { Cart } from "./models/cart"
@@ -117,3 +121,5 @@ export { Store } from "./models/store"
 export { Swap } from "./models/swap"
 export { User } from "./models/user"
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+>>>>>>> c56660fc (feat: new tax api (#979))

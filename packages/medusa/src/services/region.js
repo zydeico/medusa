@@ -76,7 +76,10 @@ class RegionService extends BaseService {
       eventBusService: this.eventBus_,
       paymentProviderRepository: this.paymentProviderRepository_,
       paymentProviderService: this.paymentProviderService_,
+<<<<<<< HEAD
       taxProviderRepository: this.taxProviderRepository_,
+=======
+>>>>>>> c56660fc (feat: new tax api (#979))
       taxProviderService: this.taxProviderService_,
       fulfillmentProviderRepository: this.fulfillmentProviderRepository_,
       fulfillmentProviderService: this.fulfillmentProviderService_,

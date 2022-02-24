@@ -1,5 +1,6 @@
 import {
   AdminPaymentProvidersList,
+  AdminTaxProvidersList,
   AdminPostStoreReq,
   AdminStoresRes,
   AdminTaxProvidersList,
