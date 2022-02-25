@@ -6,11 +6,8 @@ const { setPort, useApi } = require("../../../helpers/use-api")
 
 const adminSeeder = require("../../helpers/admin-seeder")
 
-<<<<<<< HEAD
 jest.setTimeout(30000)
 
-=======
->>>>>>> c56660fc (feat: new tax api (#979))
 const {
   simpleOrderFactory,
   simpleStoreFactory,
