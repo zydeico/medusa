@@ -258,6 +258,9 @@ class CustomerGroupService extends BaseService {
     return await cgRepo.find(query)
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
 
   /**
    * Remove list of customers from a customergroup
@@ -286,10 +289,13 @@ class CustomerGroupService extends BaseService {
 
     return customerGroup
   }
+<<<<<<< HEAD
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
 =======
 >>>>>>> 75fb2ce9 (feat: update customer groups (#1075))
+=======
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
 }
 
 export default CustomerGroupService

@@ -16,11 +16,15 @@ export default (app) => {
   route.post("/", middlewares.wrap(require("./create-customer-group").default))
   route.delete(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
     "/:id/customers/batch",
     middlewares.wrap(require("./delete-customers-batch").default)
   )
 
   route.delete(
+<<<<<<< HEAD
     "/:id",
     middlewares.wrap(require("./delete-customer-group").default)
   )
@@ -33,6 +37,8 @@ export default (app) => {
   route.post("/", middlewares.wrap(require("./create-customer-group").default))
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
 =======
+=======
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
     "/:id",
     middlewares.wrap(require("./delete-customer-group").default)
   )

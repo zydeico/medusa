@@ -21,6 +21,7 @@ export class customerGroups1644943746861 implements MigrationInterface {
     )
     await queryRunner.query(
 <<<<<<< HEAD
+<<<<<<< HEAD
       `ALTER TABLE "customer_group_customers" ADD CONSTRAINT "FK_620330964db8d2999e67b0dbe3e" FOREIGN KEY ("customer_group_id") REFERENCES "customer_group"("id") ON DELETE CASCADE ON UPDATE NO ACTION`
     )
     await queryRunner.query(
@@ -31,6 +32,12 @@ export class customerGroups1644943746861 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "customer_group_customers" ADD CONSTRAINT "FK_3c6412d076292f439269abe1a23" FOREIGN KEY ("customer_id") REFERENCES "customer"("id") ON DELETE CASCADE ON UPDATE CASCADE`
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+      `ALTER TABLE "customer_group_customers" ADD CONSTRAINT "FK_620330964db8d2999e67b0dbe3e" FOREIGN KEY ("customer_group_id") REFERENCES "customer_group"("id") ON DELETE CASCADE ON UPDATE NO ACTION`
+    )
+    await queryRunner.query(
+      `ALTER TABLE "customer_group_customers" ADD CONSTRAINT "FK_3c6412d076292f439269abe1a23" FOREIGN KEY ("customer_id") REFERENCES "customer"("id") ON DELETE CASCADE ON UPDATE NO ACTION`
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
     )
   }
 

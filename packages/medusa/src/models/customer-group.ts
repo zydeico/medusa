@@ -24,12 +24,18 @@ export class CustomerGroup {
   name: string
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   @ManyToMany(() => Customer, (customer) => customer.groups, {
     onDelete: "CASCADE",
   })
 =======
   @ManyToMany(() => Customer, { cascade: true })
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+  @ManyToMany(() => Customer, (customer) => customer.groups, {
+    onDelete: "CASCADE",
+  })
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
   @JoinTable({
     name: "customer_group_customers",
     joinColumn: {

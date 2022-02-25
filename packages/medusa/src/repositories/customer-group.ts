@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { DeleteResult, EntityRepository, In, Repository } from "typeorm"
 import { CustomerGroup } from "../models/customer-group"
 
@@ -25,3 +26,24 @@ import { CustomerGroup } from "../models/customer-group"
 @EntityRepository(CustomerGroup)
 export class CustomerGroupRepository extends Repository<CustomerGroup> {}
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
+=======
+import { DeleteResult, EntityRepository, In, Repository } from "typeorm"
+import { CustomerGroup } from "../models/customer-group"
+
+@EntityRepository(CustomerGroup)
+export class CustomerGroupRepository extends Repository<CustomerGroup> {
+  async removeCustomers(
+    groupId: string,
+    customerIds: string[]
+  ): Promise<DeleteResult> {
+    return await this.createQueryBuilder()
+      .delete()
+      .from("customer_group_customers")
+      .where({
+        customer_group_id: groupId,
+        customer_id: In(customerIds),
+      })
+      .execute()
+  }
+}
+>>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
