@@ -75,6 +75,7 @@ export class Customer {
   })
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   @ManyToMany(() => CustomerGroup, (cg) => cg.customers, { cascade: true })
 =======
 =======
@@ -84,6 +85,11 @@ export class Customer {
 =======
   @ManyToMany(() => CustomerGroup, (cg) => cg.customers, { cascade: true })
 >>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
+=======
+  @ManyToMany(() => CustomerGroup, (cg) => cg.customers, {
+    onDelete: "CASCADE",
+  })
+>>>>>>> 4b4463f0 (Feat: Bulk add customers to customer group (#1095))
   groups: CustomerGroup[]
 
   @CreateDateColumn({ type: resolveDbType("timestamptz") })
