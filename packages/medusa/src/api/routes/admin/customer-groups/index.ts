@@ -10,8 +10,12 @@ export default (app) => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 21d99a44 (feat: GET customer group endpoint)
+=======
+  route.get("/", middlewares.wrap(require("./list-customer-groups").default))
+>>>>>>> a514d84c (feat: list customer groups (#1099))
   route.get("/:id", middlewares.wrap(require("./get-customer-group").default))
   route.post("/", middlewares.wrap(require("./create-customer-group").default))
   route.post(

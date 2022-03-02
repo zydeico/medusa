@@ -1,17 +1,17 @@
 import { MedusaError } from "medusa-core-utils"
 import { BaseService } from "medusa-interfaces"
-import { DeepPartial, EntityManager } from "typeorm"
+import { DeepPartial, EntityManager, ILike, SelectQueryBuilder } from "typeorm"
 import { CustomerService } from "."
 import { CustomerGroup } from ".."
 import { CustomerGroupRepository } from "../repositories/customer-group"
 <<<<<<< HEAD
 <<<<<<< HEAD
 import { FindConfig } from "../types/common"
-import { formatException } from "../utils/exception-formatter"
 import {
   CustomerGroupUpdate,
   FilterableCustomerGroupProps,
 } from "../types/customer-groups"
+<<<<<<< HEAD
 =======
 >>>>>>> b16976a6 (Feat: Create customer group (#1074))
 =======
@@ -25,6 +25,9 @@ import {
   FilterableCustomerGroupProps,
 } from "../types/customer-groups"
 >>>>>>> 694e2df2 (feat: customer group update (#1098))
+=======
+import { formatException } from "../utils/exception-formatter"
+>>>>>>> a514d84c (feat: list customer groups (#1099))
 
 type CustomerGroupConstructorProps = {
   manager: EntityManager
@@ -325,6 +328,41 @@ class CustomerGroupService extends BaseService {
 <<<<<<< HEAD
 =======
 >>>>>>> 0394be36 (Feat: bulk delete customers from customer group (#1097))
+
+  /**
+   * Retrieve a list of customer groups and total count of records that match the query.
+   *
+   * @param {Object} selector - the query object for find
+   * @param {Object} config - the config to be used for find
+   * @return {Promise} the result of the find operation
+   */
+  async listAndCount(
+    selector: FilterableCustomerGroupProps = {},
+    config: FindConfig<CustomerGroup>
+  ): Promise<[CustomerGroup[], number]> {
+    const cgRepo: CustomerGroupRepository = this.manager_.getCustomRepository(
+      this.customerGroupRepository_
+    )
+
+    let q
+    if ("q" in selector) {
+      q = selector.q
+      delete selector.q
+    }
+
+    const query = this.buildQuery_(selector, config)
+
+    if (q) {
+      const where = query.where
+
+      delete where.name
+
+      query.where = (qb: SelectQueryBuilder<CustomerGroup>): void => {
+        qb.where(where).andWhere([{ name: ILike(`%${q}%`) }])
+      }
+    }
+    return await cgRepo.findAndCount(query)
+  }
 
   /**
    * Remove list of customers from a customergroup

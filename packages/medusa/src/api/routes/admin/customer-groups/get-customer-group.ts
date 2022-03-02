@@ -4,7 +4,7 @@ import { FindParams } from "../../../../types/common"
 import { validator } from "../../../../utils/validator"
 
 /**
- * @oas [get] /customer-group/{id}
+ * @oas [get] /customer-groups/{id}
  * operationId: "GetCustomerGroupsGroup"
  * summary: "Retrieve a CustomerGroup"
  * description: "Retrieves a Customer Group."
