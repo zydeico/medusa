@@ -23,16 +23,16 @@ import { optionalBooleanMapper } from "../../../../utils/validators/is-boolean"
  * parameters:
  *   - (query) q {string} Query used for searching products.
  *   - (query) id {string} Id of the product to search for.
- *   - (query) collection_id {string[]} Collection ids to search for.
- *   - (query) tags {string[]} Tags to search for.
+ *   - (query) collection_id {array} Collection ids to search for.
+ *   - (query) tags {array} Tags to search for.
  *   - (query) title {string} to search for.
  *   - (query) description {string} to search for.
  *   - (query) handle {string} to search for.
  *   - (query) is_giftcard {string} Search for giftcards using is_giftcard=true.
  *   - (query) type {string} to search for.
- *   - (query) created_at {DateComparisonOperator} Date comparison for when resulting products was created, i.e. less than, greater than etc.
- *   - (query) updated_at {DateComparisonOperator} Date comparison for when resulting products was updated, i.e. less than, greater than etc.
- *   - (query) deleted_at {DateComparisonOperator} Date comparison for when resulting products was deleted, i.e. less than, greater than etc.
+ *   - (query) created_at {object} Date comparison for when resulting products was created, i.e. less than, greater than etc.
+ *   - (query) updated_at {object} Date comparison for when resulting products was updated, i.e. less than, greater than etc.
+ *   - (query) deleted_at {object} Date comparison for when resulting products was deleted, i.e. less than, greater than etc.
  *   - (query) offset {string} How many products to skip in the result.
  *   - (query) limit {string} Limit the number of products returned.
  * tags:

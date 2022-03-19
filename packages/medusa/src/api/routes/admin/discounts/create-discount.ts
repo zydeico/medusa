@@ -25,10 +25,10 @@ import { IsISO8601Duration } from "../../../../utils/validators/iso8601-duration
  * requestBody:
  *   content:
  *     application/json:
- *       required:
- *         - code
- *         - rule
  *       schema:
+ *         required:
+ *           - code
+ *           - rule
  *         properties:
  *           code:
  *             type: string

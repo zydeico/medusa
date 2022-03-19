@@ -22,16 +22,16 @@ import { validator } from "../../../../utils/validator"
  * requestBody:
  *   content:
  *     application/json:
- *       required:
- *         - email
- *         - billing_address
- *         - shipping_address
- *         - items
- *         - region
- *         - customer_id
- *         - payment_method
- *         - shipping_method
  *       schema:
+ *         required:
+ *           - email
+ *           - billing_address
+ *           - shipping_address
+ *           - items
+ *           - region
+ *           - customer_id
+ *           - payment_method
+ *           - shipping_method
  *         properties:
  *           status:
  *             description: status of the order
@@ -42,11 +42,11 @@ import { validator } from "../../../../utils/validator"
  *           billing_address:
  *             description: Billing address
  *             anyOf:
- *               - $ref: "#/components/schemas/address
+ *               - $ref: "#/components/schemas/address"
  *           shipping_address:
  *             description: Shipping address
  *             anyOf:
- *               - $ref: "#/components/schemas/address
+ *               - $ref: "#/components/schemas/address"
  *           items:
  *             description: The Line Items for the order
  *             type: array

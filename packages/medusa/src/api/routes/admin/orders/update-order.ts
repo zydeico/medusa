@@ -33,11 +33,11 @@ import { validator } from "../../../../utils/validator"
  *           billing_address:
  *             description: Billing address
  *             anyOf:
- *               - $ref: "#/components/schemas/address
+ *               - $ref: "#/components/schemas/address"
  *           shipping_address:
  *             description: Shipping address
  *             anyOf:
- *               - $ref: "#/components/schemas/address
+ *               - $ref: "#/components/schemas/address"
  *           items:
  *             description: The Line Items for the order
  *             type: array
@@ -51,7 +51,7 @@ import { validator } from "../../../../utils/validator"
  *             description: id of the customer
  *             type: string
  *           payment_method:
- *             description:
+ *             description: payment method chosen for the order
  *             type: object
  *             properties:
  *               provider_id:

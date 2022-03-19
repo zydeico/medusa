@@ -21,9 +21,9 @@ import { validator } from "../../../../utils/validator"
  * requestBody:
  *   content:
  *     application/json:
- *       required:
- *         - quantity
  *       schema:
+ *         required:
+ *           - quantity
  *         properties:
  *           variant_id:
  *             description: The id of the Product Variant to generate the Line Item from.
