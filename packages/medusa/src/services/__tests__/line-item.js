@@ -13,7 +13,7 @@ describe("LineItemService", () => {
     })
 
     const regionService = {
-      withTransaction: function() {
+      withTransaction: function () {
         return this
       },
       retrieve: () => {
@@ -24,10 +24,10 @@ describe("LineItemService", () => {
     }
 
     const productVariantService = {
-      withTransaction: function() {
+      withTransaction: function () {
         return this
       },
-      retrieve: query => {
+      retrieve: (query) => {
         if (query === IdMap.getId("test-giftcard")) {
           return {
             id: IdMap.getId("test-giftcard"),
@@ -52,8 +52,20 @@ describe("LineItemService", () => {
       getRegionPrice: () => 100,
     }
 
+    const pricingService = {
+      withTransaction: function () {
+        return this
+      },
+      getProductVariantPricing: () => {
+        return {
+          calculated_price: 100,
+        }
+      },
+    }
+
     const lineItemService = new LineItemService({
       manager: MockManager,
+      pricingService,
       lineItemRepository,
       productVariantService,
       regionService,

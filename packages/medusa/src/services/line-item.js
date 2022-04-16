@@ -178,7 +178,7 @@ class LineItemService extends BaseService {
           price = context.unit_price
         }
       } else {
-        price = await this.pricingService_
+        const variantPricing = await this.pricingService_
           .withTransaction(manager)
           .getProductVariantPricing(variant.id, {
             regionId: region.id,
@@ -186,6 +186,7 @@ class LineItemService extends BaseService {
             customer_id: context.customer_id,
             include_discount_prices: true,
           })
+        price = variantPricing.calculated_price
       }
 
       const toCreate = {
