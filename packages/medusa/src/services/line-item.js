@@ -12,6 +12,7 @@ class LineItemService extends BaseService {
     lineItemTaxLineRepository,
     productVariantService,
     productService,
+    pricingService,
     regionService,
     cartRepository,
     lineItemAdjustmentService,
@@ -29,6 +30,9 @@ class LineItemService extends BaseService {
 
     /** @private @const {ProductVariantService} */
     this.productVariantService_ = productVariantService
+
+    /** @private @const {PricingService} */
+    this.pricingService_ = pricingService
 
     /** @private @const {ProductService} */
     this.productService_ = productService
@@ -155,7 +159,6 @@ class LineItemService extends BaseService {
         .withTransaction(manager)
         .retrieve(variantId, {
           relations: ["product"],
-          include_discount_prices: true,
         })
 
       const region = await this.regionService_
@@ -175,9 +178,9 @@ class LineItemService extends BaseService {
           price = context.unit_price
         }
       } else {
-        price = await this.productVariantService_
+        price = await this.pricingService_
           .withTransaction(manager)
-          .getRegionPrice(variant.id, {
+          .getProductVariantPricing(variant.id, {
             regionId: region.id,
             quantity: quantity,
             customer_id: context.customer_id,

@@ -83,6 +83,7 @@ export class ProductVariantRepository extends Repository<ProductVariant> {
     const entitiesIdsWithRelations = await Promise.all(
       Object.entries(groupedRelations).map(([toplevel, rels]) => {
         let querybuilder = this.createQueryBuilder("pv")
+
         querybuilder = querybuilder.leftJoinAndSelect(
           `pv.${toplevel}`,
           toplevel

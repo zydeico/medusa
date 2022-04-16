@@ -10,6 +10,7 @@ import {
 import { omit, pickBy } from "lodash"
 import { defaultStoreProductsRelations } from "."
 import { ProductService } from "../../../../services"
+import PricingService from "../../../../services/pricing"
 import { DateComparisonOperator } from "../../../../types/common"
 import { PriceSelectionParams } from "../../../../types/price-selection"
 import { validator } from "../../../../utils/validator"
@@ -61,6 +62,7 @@ import { optionalBooleanMapper } from "../../../../utils/validators/is-boolean"
  */
 export default async (req, res) => {
   const productService: ProductService = req.scope.resolve("productService")
+  const pricingService: PricingService = req.scope.resolve("pricingService")
 
   const validated = await validator(StoreGetProductsParams, req.query)
 
@@ -96,17 +98,20 @@ export default async (req, res) => {
       : defaultStoreProductsRelations,
     skip: validated.offset,
     take: validated.limit,
+  }
+
+  const [rawProducts, count] = await productService.listAndCount(
+    pickBy(filterableFields, (val) => typeof val !== "undefined"),
+    listConfig
+  )
+
+  const products = await pricingService.setAdditionalPrices(rawProducts, {
     cart_id: validated.cart_id,
     region_id: validated.region_id,
     currency_code: validated.currency_code,
     customer_id: req.user?.customer_id,
     include_discount_prices: true,
-  }
-
-  const [products, count] = await productService.listAndCount(
-    pickBy(filterableFields, (val) => typeof val !== "undefined"),
-    listConfig
-  )
+  })
 
   res.json({
     products,

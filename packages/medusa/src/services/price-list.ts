@@ -220,7 +220,7 @@ class PriceListService extends BaseService {
         return Promise.resolve()
       }
 
-      await priceListRepo.delete(priceList)
+      await priceListRepo.delete(id)
 
       return Promise.resolve()
     })

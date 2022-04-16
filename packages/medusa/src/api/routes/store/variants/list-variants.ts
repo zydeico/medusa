@@ -3,7 +3,7 @@ import { omit } from "lodash"
 import { IsInt, IsOptional, IsString } from "class-validator"
 import { defaultStoreVariantRelations } from "."
 import { FilterableProductVariantProps } from "../../../../types/product-variant"
-import ProductVariantService from "../../../../services/product-variant"
+import { ProductVariantService, PricingService } from "../../../../services"
 import { validator } from "../../../../utils/validator"
 import { IsType } from "../../../../utils/validators/is-type"
 import { NumericalComparisonOperator } from "../../../../types/common"
@@ -50,11 +50,6 @@ export default async (req, res) => {
       : defaultStoreVariantRelations,
     skip: offset,
     take: limit,
-    cart_id: validated.cart_id,
-    region_id: validated.region_id,
-    currency_code: validated.currency_code,
-    customer_id: customer_id,
-    include_discount_prices: true,
   }
 
   const filterableFields: FilterableProductVariantProps = omit(validated, [
@@ -71,10 +66,18 @@ export default async (req, res) => {
     filterableFields.id = validated.ids.split(",")
   }
 
+  const pricingService: PricingService = req.scope.resolve("pricingService")
   const variantService: ProductVariantService = req.scope.resolve(
     "productVariantService"
   )
-  const variants = await variantService.list(filterableFields, listConfig)
+  const rawVariants = await variantService.list(filterableFields, listConfig)
+  const variants = await pricingService.setVariantPrices(rawVariants, {
+    cart_id: validated.cart_id,
+    region_id: validated.region_id,
+    currency_code: validated.currency_code,
+    customer_id: customer_id,
+    include_discount_prices: true,
+  })
 
   res.json({ variants })
 }

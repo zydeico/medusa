@@ -1,5 +1,5 @@
 import { defaultStoreProductsRelations } from "."
-import { ProductService } from "../../../../services"
+import { ProductService, PricingService } from "../../../../services"
 import { PriceSelectionParams } from "../../../../types/price-selection"
 import { validator } from "../../../../utils/validator"
 
@@ -30,8 +30,12 @@ export default async (req, res) => {
   const customer_id = req.user?.customer_id
 
   const productService: ProductService = req.scope.resolve("productService")
-  const product = await productService.retrieve(id, {
+  const pricingService: PricingService = req.scope.resolve("pricingService")
+  const rawProduct = await productService.retrieve(id, {
     relations: defaultStoreProductsRelations,
+  })
+
+  const [product] = await pricingService.setAdditionalPrices([rawProduct], {
     cart_id: validated.cart_id,
     customer_id: customer_id,
     region_id: validated.region_id,

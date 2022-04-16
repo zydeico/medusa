@@ -28,6 +28,11 @@ import TaxRateService from "./tax-rate"
 
 const CACHE_TIME = 30 // seconds
 
+type RegionDetails = {
+  id: string
+  tax_rate: number | null
+}
+
 /**
  * Finds tax providers and assists in tax related operations.
  */
@@ -326,7 +331,7 @@ class TaxProviderService extends BaseService {
    */
   async getRegionRatesForShipping(
     optionId: string,
-    region: Region
+    region: RegionDetails
   ): Promise<TaxServiceRate[]> {
     const cacheHit = await this.getCacheEntry(optionId, region.id)
     if (cacheHit) {
@@ -373,7 +378,7 @@ class TaxProviderService extends BaseService {
    */
   async getRegionRatesForProduct(
     productId: string,
-    region: Region
+    region: RegionDetails
   ): Promise<TaxServiceRate[]> {
     const cacheHit = await this.getCacheEntry(productId, region.id)
     if (cacheHit) {

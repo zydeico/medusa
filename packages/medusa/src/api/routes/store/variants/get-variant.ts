@@ -1,5 +1,5 @@
 import { defaultStoreVariantRelations } from "."
-import ProductVariantService from "../../../../services/product-variant"
+import { ProductVariantService, PricingService } from "../../../../services"
 import { PriceSelectionParams } from "../../../../types/price-selection"
 import { validator } from "../../../../utils/validator"
 
@@ -30,11 +30,15 @@ export default async (req, res) => {
   const variantService: ProductVariantService = req.scope.resolve(
     "productVariantService"
   )
+  const pricingService: PricingService = req.scope.resolve("pricingService")
 
   const customer_id = req.user?.customer_id
 
-  const variant = await variantService.retrieve(id, {
+  const rawVariant = await variantService.retrieve(id, {
     relations: defaultStoreVariantRelations,
+  })
+
+  const [variant] = await pricingService.setVariantPrices([rawVariant], {
     cart_id: validated.cart_id,
     customer_id: customer_id,
     region_id: validated.region_id,
