@@ -329,7 +329,7 @@ class PricingService extends BaseService {
    * @return A map of variant ids to their corresponding prices
    */
   async getProductPricing(
-    product: Product,
+    product: Pick<Product, "id" | "variants">,
     context: PriceSelectionContext
   ): Promise<Record<string, ProductVariantPricing>> {
     const pricingContext = await this.collectPricingContext(context)
