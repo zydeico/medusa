@@ -21,7 +21,6 @@ export type PricingContext = {
   price_selection: PriceSelectionContext
   automatic_taxes: boolean
   tax_rate: number | null
-  product_rates: TaxServiceRate[] | null
 }
 
 export type PricedVariant = Partial<ProductVariant> & ProductVariantPricing
