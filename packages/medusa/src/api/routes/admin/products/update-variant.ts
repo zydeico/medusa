@@ -148,15 +148,13 @@ export default async (req, res) => {
     ...validated,
   })
 
-  await productVariantService.retrieve(variant_id)
-
   const rawProduct = await productService.retrieve(id, {
     select: defaultAdminProductFields,
     relations: defaultAdminProductRelations,
     ...validatedQueryParams,
   })
 
-  const [product] = await pricingService.setAdditionalPrices([rawProduct], {})
+  const [product] = await pricingService.setProductPrices([rawProduct], {})
 
   res.json({ product })
 }

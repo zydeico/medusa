@@ -2,7 +2,7 @@ export const PricingServiceMock = {
   withTransaction: function () {
     return this
   },
-  setAdditionalPrices: jest.fn().mockImplementation((prod) => {
+  setProductPrices: jest.fn().mockImplementation((prod) => {
     return Promise.resolve(prod)
   }),
   setVariantPrices: jest.fn().mockImplementation((variant) => {

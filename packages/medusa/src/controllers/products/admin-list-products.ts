@@ -74,12 +74,12 @@ const listAndCount = async (
   )
 
   let products = rawProducts
-  if (
-    listConfig.relations &&
-    listConfig.relations.includes("variants") &&
-    listConfig.relations.includes("variants.prices")
-  ) {
-    products = await pricingService.setAdditionalPrices(rawProducts, {})
+
+  const includesPricing = ["variants", "variants.prices"].every((relation) =>
+    listConfig?.relations?.includes(relation)
+  )
+  if (includesPricing) {
+    products = await pricingService.setProductPrices(rawProducts, {})
   }
 
   return {

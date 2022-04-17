@@ -79,6 +79,12 @@ class PricingService extends BaseService {
     return cloned
   }
 
+  /**
+   * Collects additional information neccessary for completing the price
+   * selection.
+   * @param context - the price selection context to use
+   * @return The pricing context
+   */
   async collectPricingContext(
     context: PriceSelectionContext
   ): Promise<PricingContext> {
@@ -124,13 +130,22 @@ class PricingService extends BaseService {
     )
   }
 
+  /**
+   * Gets the prices for a product variant
+   * @param variantPricing - the prices retrieved from a variant
+   * @param productRates - the tax rates that the product has applied
+   * @return The tax related variant prices.
+   */
   async calculateTaxes(
-    prices: ProductVariantPricing,
+    variantPricing: ProductVariantPricing,
     productRates: TaxServiceRate[]
   ): Promise<TaxedPricing> {
-    const rate = productRates.reduce((acc: number, next: TaxServiceRate) => {
-      return acc + (next.rate || 0) / 100
-    }, 0)
+    const rate = productRates.reduce(
+      (accRate: number, nextTaxRate: TaxServiceRate) => {
+        return accRate + (nextTaxRate.rate || 0) / 100
+      },
+      0
+    )
 
     const result: TaxedPricing = {
       original_tax: null,
@@ -140,21 +155,28 @@ class PricingService extends BaseService {
       tax_rates: productRates,
     }
 
-    if (prices.calculated_price !== null) {
-      const taxAmount = Math.round(prices.calculated_price * rate)
+    if (variantPricing.calculated_price !== null) {
+      const taxAmount = Math.round(variantPricing.calculated_price * rate)
       result.calculated_tax = taxAmount
-      result.calculated_price_incl_tax = prices.calculated_price + taxAmount
+      result.calculated_price_incl_tax =
+        variantPricing.calculated_price + taxAmount
     }
 
-    if (prices.original_price !== null) {
-      const taxAmount = Math.round(prices.original_price * rate)
+    if (variantPricing.original_price !== null) {
+      const taxAmount = Math.round(variantPricing.original_price * rate)
       result.original_tax = taxAmount
-      result.original_price_incl_tax = prices.original_price + taxAmount
+      result.original_price_incl_tax = variantPricing.original_price + taxAmount
     }
 
     return result
   }
 
+  /**
+   * Gets the prices for a product variant
+   * @param variantId - the id of the variant to get prices for
+   * @param context - the price selection context to use
+   * @return The product variant prices
+   */
   async getProductVariantPricing(
     variantId: string,
     context: PriceSelectionContext | PricingContext
@@ -225,6 +247,12 @@ class PricingService extends BaseService {
     )
   }
 
+  /**
+   * Gets all the variant prices for a product
+   * @param productId - the id of the product to get prices for
+   * @param context - the price selection context to use
+   * @return A map of variant ids to their corresponding prices
+   */
   async getProductPricing(
     productId: string,
     context: PriceSelectionContext
@@ -248,28 +276,28 @@ class PricingService extends BaseService {
             })
         }
 
-        const pricings = await Promise.all(
+        const pricings = {}
+        await Promise.all(
           variants.map(async ({ id }) => {
             const variantPricing = await this.getProductVariantPricing(
               id,
               pricingContext
             )
-
-            return {
-              id,
-              pricing: variantPricing,
-            }
+            pricings[id] = variantPricing
           })
         )
 
-        return pricings.reduce((acc, next) => {
-          acc[next.id] = next.pricing
-          return acc
-        }, {})
+        return pricings
       }
     )
   }
 
+  /**
+   * Set additional prices on a list of product variants.
+   * @param variants - list of variants on which to set additional prices
+   * @param context - the price selection context to use
+   * @return A list of products with variants decorated with prices
+   */
   async setVariantPrices(
     variants: ProductVariant[],
     context: PriceSelectionContext
@@ -295,36 +323,34 @@ class PricingService extends BaseService {
    * @param context - the price selection context to use
    * @return A list of products with variants decorated with prices
    */
-  async setAdditionalPrices(
+  async setProductPrices(
     products: Product[],
     context: PriceSelectionContext
   ): Promise<(Product | PricedProduct)[]> {
     return await Promise.all(
       products.map(async (product) => {
-        if (product.variants && product.variants.length) {
-          const variantPricing = await this.getProductPricing(
-            product.id,
-            context
-          )
-
-          const pricedVariants = product.variants.map(
-            (productVariant): PricedVariant => {
-              const pricing = variantPricing[productVariant.id]
-              return {
-                ...productVariant,
-                ...pricing,
-              }
-            }
-          )
-
-          const pricedProduct = {
-            ...product,
-            variants: pricedVariants,
-          }
-
-          return pricedProduct
+        if (!product?.variants?.length) {
+          return product
         }
-        return product
+
+        const variantPricing = await this.getProductPricing(product.id, context)
+
+        const pricedVariants = product.variants.map(
+          (productVariant): PricedVariant => {
+            const pricing = variantPricing[productVariant.id]
+            return {
+              ...productVariant,
+              ...pricing,
+            }
+          }
+        )
+
+        const pricedProduct = {
+          ...product,
+          variants: pricedVariants,
+        }
+
+        return pricedProduct
       })
     )
   }

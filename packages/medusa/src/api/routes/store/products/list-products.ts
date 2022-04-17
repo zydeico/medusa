@@ -105,7 +105,7 @@ export default async (req, res) => {
     listConfig
   )
 
-  const products = await pricingService.setAdditionalPrices(rawProducts, {
+  const products = await pricingService.setProductPrices(rawProducts, {
     cart_id: validated.cart_id,
     region_id: validated.region_id,
     currency_code: validated.currency_code,

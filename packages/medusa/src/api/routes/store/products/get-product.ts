@@ -35,7 +35,7 @@ export default async (req, res) => {
     relations: defaultStoreProductsRelations,
   })
 
-  const [product] = await pricingService.setAdditionalPrices([rawProduct], {
+  const [product] = await pricingService.setProductPrices([rawProduct], {
     cart_id: validated.cart_id,
     customer_id: customer_id,
     region_id: validated.region_id,
