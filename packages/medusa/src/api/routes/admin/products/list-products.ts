@@ -29,9 +29,33 @@ import { validator } from "../../../../utils/validator"
  * parameters:
  *   - (query) q {string} Query used for searching products.
  *   - (query) id {string} Id of the product to search for.
- *   - (query) status {array} Status to search for.
- *   - (query) collection_id {array} Collection ids to search for.
- *   - (query) tags {array} Tags to search for.
+ *   - in: query
+ *     name: status
+ *     style: form
+ *     explode: false
+ *     description: Status to search for
+ *     schema:
+ *       type: array
+ *       items:
+ *         type: string
+ *   - in: query
+ *     name: collection_id
+ *     style: form
+ *     explode: false
+ *     description: Collection ids to search for.
+ *     schema:
+ *       type: array
+ *       items:
+ *         type: string
+ *   - in: query
+ *     name: tags
+ *     style: form
+ *     explode: false
+ *     description: Tags to search for
+ *     schema:
+ *       type: array
+ *       items:
+ *         type: string
  *   - (query) title {string} to search for.
  *   - (query) description {string} to search for.
  *   - (query) handle {string} to search for.

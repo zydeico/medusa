@@ -15,7 +15,15 @@ import { Type } from "class-transformer"
  * parameters:
  *   - (query) q {string} Query used for searching orders.
  *   - (query) id {string} Id of the order to search for.
- *   - (query) status {array} Status to search for.
+ *   - in: query
+ *     name: status
+ *     style: form
+ *     explode: false
+ *     description: Status to search for
+ *     schema:
+ *       type: array
+ *       items:
+ *         type: string
  *   - (query) fulfillment_status {string} Fulfillment status to search for.
  *   - (query) payment_status {string} Payment status to search for.
  *   - (query) display_id {string} Display id to search for.

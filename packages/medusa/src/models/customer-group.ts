@@ -71,7 +71,7 @@ export class CustomerGroup {
  *   customers:
  *     type: array
  *     items:
- *       type: object
+ *       $ref: "#/components/schemas/customer"
  *   created_at:
  *     type: string
  *     format: date-time

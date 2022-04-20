@@ -49,6 +49,7 @@ swaggerInline(
     .catch((err) => {
       console.log("Error in admin")
       console.error(err)
+      console.log(err.toString())
     })
 })
 

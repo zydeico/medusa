@@ -41,12 +41,16 @@ import { validator } from "../../../../utils/validator"
  *           items:
  *             description: The Line Items for the order
  *             type: array
+ *             items:
+ *               $ref: "#/components/schemas/line_item"
  *           region:
  *             description: Region where the order belongs
  *             type: string
  *           discounts:
  *             description: Discounts applied to the order
  *             type: array
+ *             items:
+ *               $ref: "#/components/schemas/line_item"
  *           customer_id:
  *             description: id of the customer
  *             type: string
@@ -78,6 +82,8 @@ import { validator } from "../../../../utils/validator"
  *                 description: Data relevant to the specific shipping method.
  *               items:
  *                 type: array
+ *                 items:
+ *                   $ref: "#/components/schemas/line_item"
  *                 description: Items to ship
  *           no_notification:
  *             description: A flag to indicate if no notifications should be emitted related to the updated order.

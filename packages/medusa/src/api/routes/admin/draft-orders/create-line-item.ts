@@ -18,6 +18,8 @@ import { validator } from "../../../../utils/validator"
  * summary: "Create a Line Item for Draft Order"
  * description: "Creates a Line Item for the Draft Order"
  * x-authenticated: true
+ * parameters:
+ *   - (path) id=* {string} The id of the Draft Order.
  * requestBody:
  *   content:
  *     application/json:

@@ -154,6 +154,82 @@
         }
       }
     },
+    "/auth": {
+      "post": {
+        "operationId": "PostAuth",
+        "summary": "Authenticate a User",
+        "x-authenticated": false,
+        "description": "Logs a User in and authorizes them to manage Store settings.",
+        "parameters": [],
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "The User's email."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The User's password."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetAuth",
+        "summary": "Get Session",
+        "x-authenticated": true,
+        "description": "Gets the currently logged in User.",
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/collections/{id}/products/batch": {
       "post": {
         "operationId": "PostProductsToCollection",
@@ -717,15 +793,15 @@
         }
       }
     },
-    "/auth": {
+    "/customers": {
       "post": {
-        "operationId": "PostAuth",
-        "summary": "Authenticate a User",
-        "x-authenticated": false,
-        "description": "Logs a User in and authorizes them to manage Store settings.",
+        "operationId": "PostCustomers",
+        "summary": "Create a Customer",
+        "description": "Creates a Customer.",
+        "x-authenticated": true,
         "parameters": [],
         "tags": [
-          "Auth"
+          "Customer"
         ],
         "responses": {
           "200": {
@@ -734,8 +810,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "user": {
-                      "$ref": "#/components/schemas/user"
+                    "customer": {
+                      "$ref": "#/components/schemas/customer"
                     }
                   }
                 }
@@ -750,16 +826,29 @@
                 "type": "object",
                 "required": [
                   "email",
-                  "password"
+                  "first_name",
+                  "last_name"
                 ],
                 "properties": {
                   "email": {
                     "type": "string",
-                    "description": "The User's email."
+                    "description": "The Customer's email address."
                   },
-                  "password": {
+                  "first_name": {
                     "type": "string",
-                    "description": "The User's password."
+                    "description": "The Customer's first name."
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "The Customer's last name."
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "The Customer's phone number."
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Metadata for the customer."
                   }
                 }
               }
@@ -768,12 +857,12 @@
         }
       },
       "get": {
-        "operationId": "GetAuth",
-        "summary": "Get Session",
+        "operationId": "GetCustomers",
+        "summary": "List Customers",
+        "description": "Retrieves a list of Customers.",
         "x-authenticated": true,
-        "description": "Gets the currently logged in User.",
         "tags": [
-          "Auth"
+          "Customer"
         ],
         "responses": {
           "200": {
@@ -782,8 +871,143 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "user": {
-                      "$ref": "#/components/schemas/user"
+                    "customer": {
+                      "$ref": "#/components/schemas/customer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "operationId": "GetCustomersCustomer",
+        "summary": "Retrieve a Customer",
+        "description": "Retrieves a Customer.",
+        "x-authenticated": true,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The id of the Customer.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Customer"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "customer": {
+                      "$ref": "#/components/schemas/customer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "PostCustomersCustomer",
+        "summary": "Update a Customer",
+        "description": "Updates a Customer.",
+        "x-authenticated": true,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The id of the Customer.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expand",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "The Customer's email. Only providable if user not registered."
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "The Customer's first name."
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "The Customer's last name."
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "The Customer's phone number."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The Customer's password."
+                  },
+                  "groups": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "description": "The id of a customer group",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "description": "A list of customer groups to which the customer belongs."
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Metadata for the customer."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Customer"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "customer": {
+                      "$ref": "#/components/schemas/customer"
                     }
                   }
                 }
@@ -967,6 +1191,17 @@
         "summary": "Create a Line Item for Draft Order",
         "description": "Creates a Line Item for the Draft Order",
         "x-authenticated": true,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The id of the Draft Order.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1154,6 +1389,26 @@
         "summary": "Update a Line Item for a Draft Order",
         "description": "Updates a Line Item for a Draft Order",
         "x-authenticated": true,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The id of the Draft Order.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "line_id",
+            "required": true,
+            "description": "The id of the Line Item.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2222,218 +2477,6 @@
                   "properties": {
                     "gift_card": {
                       "$ref": "#/components/schemas/gift_card"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/customers": {
-      "post": {
-        "operationId": "PostCustomers",
-        "summary": "Create a Customer",
-        "description": "Creates a Customer.",
-        "x-authenticated": true,
-        "parameters": [],
-        "tags": [
-          "Customer"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "customer": {
-                      "$ref": "#/components/schemas/customer"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "email",
-                  "first_name",
-                  "last_name"
-                ],
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "The Customer's email address."
-                  },
-                  "first_name": {
-                    "type": "string",
-                    "description": "The Customer's first name."
-                  },
-                  "last_name": {
-                    "type": "string",
-                    "description": "The Customer's last name."
-                  },
-                  "phone": {
-                    "type": "string",
-                    "description": "The Customer's phone number."
-                  },
-                  "metadata": {
-                    "type": "object",
-                    "description": "Metadata for the customer."
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "operationId": "GetCustomers",
-        "summary": "List Customers",
-        "description": "Retrieves a list of Customers.",
-        "x-authenticated": true,
-        "tags": [
-          "Customer"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "customer": {
-                      "$ref": "#/components/schemas/customer"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/customers/{id}": {
-      "get": {
-        "operationId": "GetCustomersCustomer",
-        "summary": "Retrieve a Customer",
-        "description": "Retrieves a Customer.",
-        "x-authenticated": true,
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "The id of the Customer.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "tags": [
-          "Customer"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "customer": {
-                      "$ref": "#/components/schemas/customer"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "PostCustomersCustomer",
-        "summary": "Update a Customer",
-        "description": "Updates a Customer.",
-        "x-authenticated": true,
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "The id of the Customer.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "The Customer's email. Only providable if user not registered."
-                  },
-                  "first_name": {
-                    "type": "string",
-                    "description": "The Customer's first name."
-                  },
-                  "last_name": {
-                    "type": "string",
-                    "description": "The Customer's last name."
-                  },
-                  "phone": {
-                    "type": "string",
-                    "description": "The Customer's phone number."
-                  },
-                  "password": {
-                    "type": "string",
-                    "description": "The Customer's password."
-                  },
-                  "groups": {
-                    "type": "array",
-                    "description": "A list of customer groups to which the customer belongs.",
-                    "items": {
-                      "required": [
-                        "id"
-                      ],
-                      "properties": {
-                        "id": {
-                          "description": "The id of a customer group",
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "metadata": {
-                    "type": "object",
-                    "description": "Metadata for the customer."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Customer"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "customer": {
-                      "$ref": "#/components/schemas/customer"
                     }
                   }
                 }
@@ -3847,7 +3890,10 @@
                   },
                   "items": {
                     "description": "The Line Items for the order",
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/line_item"
+                    }
                   },
                   "region": {
                     "description": "Region where the order belongs",
@@ -3855,7 +3901,10 @@
                   },
                   "discounts": {
                     "description": "Discounts applied to the order",
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/line_item"
+                    }
                   },
                   "customer_id": {
                     "description": "id of the customer",
@@ -3905,6 +3954,9 @@
                       },
                       "items": {
                         "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/line_item"
+                        },
                         "description": "Items to ship"
                       }
                     }
@@ -3963,9 +4015,14 @@
           {
             "in": "query",
             "name": "status",
-            "description": "Status to search for.",
+            "style": "form",
+            "explode": false,
+            "description": "Status to search for",
             "schema": {
-              "type": "array"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -4652,7 +4709,10 @@
                   },
                   "items": {
                     "description": "The Line Items for the order",
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/line_item"
+                    }
                   },
                   "region": {
                     "description": "Region where the order belongs",
@@ -4660,7 +4720,10 @@
                   },
                   "discounts": {
                     "description": "Discounts applied to the order",
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/line_item"
+                    }
                   },
                   "customer_id": {
                     "description": "id of the customer",
@@ -4702,6 +4765,9 @@
                       },
                       "items": {
                         "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/line_item"
+                        },
                         "description": "Items to ship"
                       }
                     }
@@ -5578,25 +5644,40 @@
           {
             "in": "query",
             "name": "status",
-            "description": "Status to search for.",
+            "style": "form",
+            "explode": false,
+            "description": "Status to search for",
             "schema": {
-              "type": "array"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
             "in": "query",
             "name": "collection_id",
+            "style": "form",
+            "explode": false,
             "description": "Collection ids to search for.",
             "schema": {
-              "type": "array"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
             "in": "query",
             "name": "tags",
-            "description": "Tags to search for.",
+            "style": "form",
+            "explode": false,
+            "description": "Tags to search for",
             "schema": {
-              "type": "array"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -7284,7 +7365,16 @@
                     "fulfillment_options": {
                       "type": "array",
                       "items": {
-                        "type": "object"
+                        "properties": {
+                          "provider_id": {
+                            "type": "string",
+                            "description": "id of the fulfillment provider"
+                          },
+                          "options": {
+                            "type": "object",
+                            "description": "fulfillment provider options"
+                          }
+                        }
                       }
                     }
                   }
@@ -7398,7 +7488,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "region_id",
+            "name": "id",
             "required": true,
             "description": "The id of the Region.",
             "schema": {
@@ -8201,74 +8291,6 @@
         }
       }
     },
-    "/swaps/{id}": {
-      "get": {
-        "operationId": "GetSwapsSwap",
-        "summary": "Retrieve a Swap",
-        "description": "Retrieves a Swap.",
-        "x-authenticated": true,
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "The id of the Swap.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "tags": [
-          "Swap"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "swap": {
-                      "$ref": "#/components/schemas/swap"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/swaps": {
-      "get": {
-        "operationId": "GetSwaps",
-        "summary": "List Swaps",
-        "description": "Retrieves a list of Swaps.",
-        "x-authenticated": true,
-        "tags": [
-          "Swap"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "swaps": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/swap"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/shipping-profiles": {
       "post": {
         "operationId": "PostShippingProfiles",
@@ -8678,6 +8700,74 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/store"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/swaps/{id}": {
+      "get": {
+        "operationId": "GetSwapsSwap",
+        "summary": "Retrieve a Swap",
+        "description": "Retrieves a Swap.",
+        "x-authenticated": true,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The id of the Swap.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Swap"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "swap": {
+                      "$ref": "#/components/schemas/swap"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/swaps": {
+      "get": {
+        "operationId": "GetSwaps",
+        "summary": "List Swaps",
+        "description": "Retrieves a list of Swaps.",
+        "x-authenticated": true,
+        "tags": [
+          "Swap"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "swaps": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/swap"
                       }
                     }
                   }
@@ -9328,6 +9418,12 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "role",
+                  "api_token"
+                ],
                 "properties": {
                   "first_name": {
                     "type": "string",
@@ -10025,7 +10121,7 @@
           "customers": {
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/components/schemas/customer"
             }
           },
           "created_at": {
@@ -11351,7 +11447,7 @@
             "description": "The Products contained in the Product Collection.",
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/components/schemas/product"
             }
           },
           "created_at": {
