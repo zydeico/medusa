@@ -23,6 +23,7 @@ class BatchJobService extends BaseService<BatchJobService> {
     CREATED: "batch.created",
     UPDATED: "batch.updated",
     CANCELLED: "batch.cancelled",
+    COMPLETED: "batch.completed",
   }
 
   constructor(container: InjectedContainer) {
@@ -94,7 +95,6 @@ class BatchJobService extends BaseService<BatchJobService> {
       const batchJob = await batchJobRepo.findOne(batchJobId)
 
       if (!batchJob || batchJob.created_by !== userId) {
-        // TODO: check if user is admin
         throw new MedusaError(
           MedusaError.Types.NOT_ALLOWED,
           "Cannot complete batch jobs created by other users"
@@ -118,7 +118,7 @@ class BatchJobService extends BaseService<BatchJobService> {
 
       await this.eventBus_
         .withTransaction(manager)
-        .emit(BatchJobService.Events.UPDATED, {
+        .emit(BatchJobService.Events.COMPLETED, {
           id: result.id,
         })
 
