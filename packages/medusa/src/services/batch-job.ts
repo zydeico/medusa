@@ -4,7 +4,11 @@ import { MedusaError } from "medusa-core-utils"
 
 import { BatchJob } from "../models"
 import { BatchJobRepository } from "../repositories/batch-job"
-import { BatchJobStatus, FilterableBatchJobProps } from "../types/batch-job"
+import {
+  BatchJobCreateProps,
+  BatchJobStatus,
+  FilterableBatchJobProps,
+} from "../types/batch-job"
 import { FindConfig } from "../types/common"
 import EventBusService from "./event-bus"
 
@@ -48,6 +52,30 @@ class BatchJobService extends BaseService<BatchJobService> {
     cloned.transactionManager_ = transactionManager
 
     return cloned
+  }
+
+  async create(data: BatchJobCreateProps): Promise<BatchJob> {
+    return await this.atomicPhase_(async (manager) => {
+      const batchJobRepo: BatchJobRepository = manager.getCustomRepository(
+        this.batchJobRepository_
+      )
+
+      const toCreate = {
+        ...data,
+        status: BatchJobStatus.CREATED,
+      }
+
+      const batchJob = await batchJobRepo.create(toCreate)
+      const result = await batchJobRepo.save(batchJob)
+
+      await this.eventBus_
+        .withTransaction(manager)
+        .emit(BatchJobService.Events.CREATED, {
+          id: result.id,
+        })
+
+      return result
+    })
   }
 
   /*

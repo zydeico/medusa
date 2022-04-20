@@ -19,6 +19,8 @@ export default (app) => {
     middlewares.wrap(require("./complete-batch-job").default)
   )
 
+  route.post("/", middlewares.wrap(require("./create-batch-job").default))
+
   return app
 }
 
