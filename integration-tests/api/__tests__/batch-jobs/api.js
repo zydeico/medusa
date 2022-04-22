@@ -165,7 +165,7 @@ describe("/admin/batch", () => {
         created_at: expect.any(String),
         updated_at: expect.any(String),
         cancelled_at: expect.any(String),
-        status: "cancelled",
+        status: "canceled",
       })
     })
 
