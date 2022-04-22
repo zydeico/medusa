@@ -22,7 +22,7 @@ class BatchJobService extends BaseService<BatchJobService> {
   static Events = {
     CREATED: "batch.created",
     UPDATED: "batch.updated",
-    CANCELLED: "batch.cancelled",
+    CANCELED: "batch.canceled",
     COMPLETED: "batch.completed",
   }
 
@@ -66,7 +66,7 @@ class BatchJobService extends BaseService<BatchJobService> {
       }
 
       batchJob.cancelled_at = new Date()
-      batchJob.status = BatchJobStatus.CANCELLED
+      batchJob.status = BatchJobStatus.CANCELED
 
       await batchJobRepo.save(batchJob)
 
@@ -74,7 +74,7 @@ class BatchJobService extends BaseService<BatchJobService> {
 
       await this.eventBus_
         .withTransaction(manager)
-        .emit(BatchJobService.Events.CANCELLED, {
+        .emit(BatchJobService.Events.CANCELED, {
           id: result.id,
         })
 
