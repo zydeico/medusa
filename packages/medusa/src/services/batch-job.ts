@@ -60,6 +60,8 @@ class BatchJobService extends BaseService<BatchJobService> {
         this.batchJobRepository_
       )
 
+      // TODO use strategy to validate the context
+
       const toCreate = {
         ...data,
         status: BatchJobStatus.CREATED,
